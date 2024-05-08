@@ -1,24 +1,27 @@
 <?php
 include 'connectToDB.php';
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update'])) {
-    $id = $_POST['id'];
-    $name = $_POST['name'];
-    $email = $_POST['email'];
-    $phone = $_POST['phone'];
+header('Content-Type: application/json');
 
-    $sql = "UPDATE users SET name = ?, email = ?, phone = ? WHERE id = ?";
+// Get JSON as a string
+$json_str = file_get_contents('php://input');
+// Decode it into an associative array
+$data = json_decode($json_str, true);
+
+if (isset($data['id'], $data['name'], $data['email'], $data['phone'])) {
+    $sql = "UPDATE users SET name = :name, email = :email, phone = :phone WHERE id = :id";
     $stmt = $pdo->prepare($sql);
-    $stmt->execute([$name, $email, $phone, $id]);
-
-    echo "User updated successfully.";
-}
-
-if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['id'])) {
-    $id = $_GET['id'];
-
-    $sql = "SELECT * FROM users WHERE id = ?";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute([$id]);
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    try {
+        $stmt->execute([
+            ':id' => $data['id'],
+            ':name' => $data['name'],
+            ':email' => $data['email'],
+            ':phone' => $data['phone']
+        ]);
+        echo json_encode(['success' => true, 'message' => 'User updated successfully']);
+    } catch (PDOException $e) {
+        echo json_encode(['success' => false, 'message' => 'Database error: ' . $e->getMessage()]);
+    }
+} else {
+    echo json_encode(['success' => false, 'message' => 'Missing required fields']);
 }
