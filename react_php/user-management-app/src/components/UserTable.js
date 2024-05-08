@@ -6,8 +6,9 @@ function UserTable() {
     const [users, setUsers] = useState([]);
 
     const fetchUsers = async () => {
+        const API_URL = process.env.REACT_APP_API_BASE_URL + '/read.php';
         try {
-            const response = await axios.get('http://yourserver.com/api/read.php');
+            const response = await axios.get(API_URL);
             setUsers(response.data);
         } catch (error) {
             console.error('Error fetching users:', error);

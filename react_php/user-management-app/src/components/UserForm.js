@@ -9,8 +9,9 @@ function UserForm({ onUserAdded }) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const API_URL = process.env.REACT_APP_API_BASE_URL + '/create.php';
         try {
-            await axios.post('http://yourserver.com/api/create.php', { name, email, phone });
+            await axios.post(API_URL, { name, email, phone });
             onUserAdded(); // Notify parent to refresh the user list
             setName('');
             setEmail('');
