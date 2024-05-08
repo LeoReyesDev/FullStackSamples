@@ -1,5 +1,5 @@
 <?php
-include 'db.php';
+include 'connectToDB.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update'])) {
     $id = $_POST['id'];

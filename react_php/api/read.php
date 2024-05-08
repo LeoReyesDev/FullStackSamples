@@ -1,5 +1,5 @@
 <?php
-include 'db.php';
+include 'connectToDB.php';
 
 $sql = "SELECT * FROM users";
 $stmt = $pdo->query($sql);
