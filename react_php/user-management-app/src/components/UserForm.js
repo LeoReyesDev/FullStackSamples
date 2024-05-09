@@ -11,15 +11,17 @@ function UserForm({ onUserAdded }) {
         e.preventDefault();
         const API_URL = process.env.REACT_APP_API_BASE_URL + '/create.php';
         try {
-            await axios.post(API_URL, { name, email, phone });
+            const response = await axios.post(API_URL, { name, email, phone });
+            console.log('Response:', response.data); // Log the response from the server
             onUserAdded(); // Notify parent to refresh the user list
             setName('');
             setEmail('');
             setPhone('');
         } catch (error) {
-            console.error('Error adding user:', error);
+            console.error('Error adding user:', error.response ? error.response.data : error.message);
         }
     };
+
 
     return (
         <Box component="form" noValidate autoComplete="off" onSubmit={handleSubmit}>

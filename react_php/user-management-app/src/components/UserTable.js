@@ -9,7 +9,7 @@ function UserTable() {
         const API_URL = process.env.REACT_APP_API_BASE_URL + '/read.php';
         try {
             const response = await axios.get(API_URL);
-            setUsers(response.data);
+            setUsers(response.data.data);
         } catch (error) {
             console.error('Error fetching users:', error);
         }
@@ -18,6 +18,8 @@ function UserTable() {
     useEffect(() => {
         fetchUsers();
     }, []);
+
+    console.log('ENDPOINT::::', process.env.REACT_APP_API_BASE_URL + '/read.php')
 
     return (
         <TableContainer component={Paper}>
