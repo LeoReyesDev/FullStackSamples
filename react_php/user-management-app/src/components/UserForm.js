@@ -9,7 +9,7 @@ function UserForm({ onUserAdded }) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const API_URL = process.env.REACT_APP_API_BASE_URL + '/create.php';
+        const API_URL = process.env.REACT_APP_API_BASE_URL + '/addNewUser.php';
         try {
             const response = await axios.post(API_URL, { name, email, phone });
             console.log('Response:', response.data); // Log the response from the server

@@ -6,10 +6,10 @@ function UserTable() {
     const [users, setUsers] = useState([]);
 
     const fetchUsers = async () => {
-        const API_URL = process.env.REACT_APP_API_BASE_URL + '/read.php';
+        const API_URL = process.env.REACT_APP_API_BASE_URL + '/getAllUsers.php';
         try {
             const response = await axios.get(API_URL);
-            setUsers(response.data.data);
+            setUsers(response.data.records);
         } catch (error) {
             console.error('Error fetching users:', error);
         }
@@ -19,10 +19,12 @@ function UserTable() {
         fetchUsers();
     }, []);
 
-    console.log('ENDPOINT::::', process.env.REACT_APP_API_BASE_URL + '/read.php')
+    console.log('ENDPOINT::::', process.env.REACT_APP_API_BASE_URL + '/getAllUsers.php')
+    console.log('USERS:::', users)
 
     return (
         <TableContainer component={Paper}>
+            <h6>Total Records {users.length}</h6>
             <Table>
                 <TableHead>
                     <TableRow>

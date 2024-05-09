@@ -1,5 +1,8 @@
 <?php
 include './connectToDB.php';  // Ensure this file properly sets up a PDO connection named $pdo
+header('Access-Control-Allow-Origin: *'); // Allow all domains for CORS (adjust in production)
+header('Access-Control-Allow-Methods: POST, GET, OPTIONS'); // Adjust methods as necessary
+header('Access-Control-Allow-Headers: Content-Type'); // Ensure the content-type header is allowed
 header('Content-Type: application/json');
 
 // Get JSON as a string from the request body
